@@ -50,66 +50,84 @@
             
             <div id="program-list" class="space-y-4">
                 <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move" data-id="chest">
-                    <h3 class="font-bold text-indigo-400 mb-2 border-b border-slate-700 pb-1">胸 Chest (Dada)</h3>
-                    <div class="space-y-3 mt-2">
+                    <h3 class="font-bold text-indigo-400 mb-1 border-b border-slate-700 pb-1">胸 Chest (Otot Dada)</h3>
+                    <p class="text-[11px] text-slate-400 mb-2">Fokus: Membentuk dada bidang dan kekuatan mendorong.</p>
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Push-Up / Bench Press</span>
+                            <span class="w-1/2 font-medium">1. Push-Up</span>
                             <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-bench" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Bench Press">
-                                <input type="number" placeholder="Reps" id="rep-bench" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Bench Press">
+                                <input type="number" value="3" placeholder="Set" id="set-pushup" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="10" placeholder="Reps" id="rep-pushup" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
                             </div>
                         </div>
                         <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Incline Dumbbell Fly</span>
+                            <span class="w-1/2 font-medium">2. Flat Bench Press</span>
                             <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-fly" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Dumbbell Fly">
-                                <input type="number" placeholder="Reps" id="rep-fly" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Dumbbell Fly">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move" data-id="arms">
-                    <h3 class="font-bold text-indigo-400 mb-2 border-b border-slate-700 pb-1">💪 Arms (Biceps & Triceps)</h3>
-                    <div class="space-y-3 mt-2">
-                        <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Dumbbell Bicep Curl</span>
-                            <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-curl" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Bicep Curl">
-                                <input type="number" placeholder="Reps" id="rep-curl" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Bicep Curl">
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Tricep Pushdown</span>
-                            <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-tricep" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Tricep Pushdown">
-                                <input type="number" placeholder="Reps" id="rep-tricep" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Tricep Pushdown">
+                                <input type="number" value="3" placeholder="Set" id="set-bench" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="12" placeholder="Reps" id="rep-bench" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move" data-id="back">
-                    <h3 class="font-bold text-indigo-400 mb-2 border-b border-slate-700 pb-1">🦅 Back (Punggung)</h3>
-                    <div class="space-y-3 mt-2">
+                    <h3 class="font-bold text-indigo-400 mb-1 border-b border-slate-700 pb-1">🦅 Back (Otot Punggung)</h3>
+                    <p class="text-[11px] text-slate-400 mb-2">Fokus: Memperbaiki postur tubuh agar tegap & berbentuk V-Shape.</p>
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Lat Pulldown</span>
+                            <span class="w-1/2 font-medium">1. Lat Pulldown</span>
                             <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-lat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Lat Pulldown">
-                                <input type="number" placeholder="Reps" id="rep-lat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Lat Pulldown">
+                                <input type="number" value="3" placeholder="Set" id="set-lat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="12" placeholder="Reps" id="rep-lat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 text-sm">
+                            <span class="w-1/2 font-medium">2. Seated Cable Row</span>
+                            <div class="flex gap-1 w-1/2 justify-end">
+                                <input type="number" value="3" placeholder="Set" id="set-row" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="10" placeholder="Reps" id="rep-row" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move" data-id="arms">
+                    <h3 class="font-bold text-indigo-400 mb-1 border-b border-slate-700 pb-1">💪 Arms (Otot Lengan)</h3>
+                    <p class="text-[11px] text-slate-400 mb-2">Fokus: Memperbesar otot lengan depan (Bicep) & belakang (Tricep).</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between gap-2 text-sm">
+                            <span class="w-1/2 font-medium">1. Dumbbell Bicep Curl</span>
+                            <div class="flex gap-1 w-1/2 justify-end">
+                                <input type="number" value="3" placeholder="Set" id="set-curl" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="12" placeholder="Reps" id="rep-curl" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 text-sm">
+                            <span class="w-1/2 font-medium">2. Tricep Pushdown</span>
+                            <div class="flex gap-1 w-1/2 justify-end">
+                                <input type="number" value="3" placeholder="Set" id="set-tricep" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="12" placeholder="Reps" id="rep-tricep" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move" data-id="legs">
-                    <h3 class="font-bold text-indigo-400 mb-2 border-b border-slate-700 pb-1">🦵 Legs (Kaki)</h3>
-                    <div class="space-y-3 mt-2">
+                    <h3 class="font-bold text-indigo-400 mb-1 border-b border-slate-700 pb-1">🦵 Legs & Shoulder (Kaki & Bahu)</h3>
+                    <p class="text-[11px] text-slate-400 mb-2">Fokus: Membakar kalori paling banyak dan memperkuat pondasi bawah.</p>
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between gap-2 text-sm">
-                            <span class="w-1/2">Goblet Squat</span>
+                            <span class="w-1/2 font-medium">1. Goblet Squat (Kaki)</span>
                             <div class="flex gap-1 w-1/2 justify-end">
-                                <input type="number" placeholder="Set" id="set-squat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Goblet Squat">
-                                <input type="number" placeholder="Reps" id="rep-squat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs input-latihan" data-gerakan="Goblet Squat">
+                                <input type="number" value="3" placeholder="Set" id="set-squat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="10" placeholder="Reps" id="rep-squat" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between gap-2 text-sm">
+                            <span class="w-1/2 font-medium">2. Dumbbell Shoulder Press</span>
+                            <div class="flex gap-1 w-1/2 justify-end">
+                                <input type="number" value="3" placeholder="Set" id="set-shoulder" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
+                                <input type="number" value="10" placeholder="Reps" id="rep-shoulder" class="w-14 bg-slate-700 text-center rounded p-1 text-white text-xs font-semibold">
                             </div>
                         </div>
                     </div>
@@ -132,7 +150,7 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto mb-4">
                 <table class="w-full text-left text-xs text-slate-300">
                     <thead class="bg-slate-700 text-slate-200 uppercase text-[10px]">
                         <tr>
@@ -145,6 +163,16 @@
                     <tbody id="tabel-riwayat-body">
                         </tbody>
                 </table>
+            </div>
+
+            <div class="flex gap-2 pt-2 border-t border-slate-700">
+                <button onclick="eksporData()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium">
+                    💾 Backup Data (Unduh)
+                </button>
+                <button onclick="document.getElementById('input-file-backup').click()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium">
+                    📂 Restore Data (Upload)
+                </button>
+                <input type="file" id="input-file-backup" class="hidden" onchange="imporData(this)">
             </div>
         </section>
 
@@ -195,9 +223,10 @@ function bukaDashboard(nama) {
 function updateDateTime() {
     const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const sekarang = new Date();
-    document.getElementById('real-date').innerText = sekarang.toLocaleDateString('id-ID', opsiTanggal);
+    document.getElementById('real-date').innerText = ClinicalDate(sekarang.toLocaleDateString('id-ID', opsiTanggal));
     document.getElementById('real-time').innerText = sekarang.toLocaleTimeString('id-ID') + " WIB";
 }
+function ClinicalDate(str){ return str; }
 
 // --- LOGIKA STOPWATCH ---
 function startTimer() {
@@ -227,7 +256,7 @@ function pauseTimer() {
 
 function stopTimer() {
     clearInterval(timer);
-    alert("Sesi latihan selesai! Waktu terhitung: " + displayStopwatch.innerText + ". Silakan periksa input gerakan dan tekan 'Simpan Sesi Latihan'.");
+    alert("Sesi latihan selesai! Waktu terhitung: " + displayStopwatch.innerText + ". Silakan sesuaikan hasil set/reps Anda jika ada perubahan, lalu tekan 'Simpan Sesi Latihan'.");
 }
 
 // --- LOGIKA URUTAN PROGRAM (DRAG & DROP) ---
@@ -236,7 +265,6 @@ Sortable.create(elList, {
     animation: 150,
     ghostClass: 'bg-indigo-900',
     onEnd: function () {
-        // Simpan urutan prioritas terbaru ke LocalStorage
         let urutan = [];
         document.querySelectorAll('#program-list > div').forEach(el => {
             urutan.push(el.getAttribute('data-id'));
@@ -263,14 +291,16 @@ function simpanSesiLatihan() {
     const tanggalStr = sekarang.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
     const waktuStr = sekarang.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
 
-    // Daftar grup gerakan
+    // Mengambil nilai aktual yang sedang diinput di kolom web
     const groupGerakan = [
-        { nama: "Bench Press", set: document.getElementById('set-bench').value, rep: document.getElementById('rep-bench').value },
-        { nama: "Incline Dumbbell Fly", set: document.getElementById('set-fly').value, rep: document.getElementById('rep-fly').value },
+        { nama: "Push-Up", set: document.getElementById('set-pushup').value, rep: document.getElementById('rep-pushup').value },
+        { nama: "Flat Bench Press", set: document.getElementById('set-bench').value, rep: document.getElementById('rep-bench').value },
+        { nama: "Lat Pulldown", set: document.getElementById('set-lat').value, rep: document.getElementById('rep-lat').value },
+        { nama: "Seated Cable Row", set: document.getElementById('set-row').value, rep: document.getElementById('rep-row').value },
         { nama: "Dumbbell Bicep Curl", set: document.getElementById('set-curl').value, rep: document.getElementById('rep-curl').value },
         { nama: "Tricep Pushdown", set: document.getElementById('set-tricep').value, rep: document.getElementById('rep-tricep').value },
-        { nama: "Lat Pulldown", set: document.getElementById('set-lat').value, rep: document.getElementById('rep-lat').value },
-        { nama: "Goblet Squat", set: document.getElementById('set-squat').value, rep: document.getElementById('rep-squat').value }
+        { nama: "Goblet Squat", set: document.getElementById('set-squat').value, rep: document.getElementById('rep-squat').value },
+        { nama: "Dumbbell Shoulder Press", set: document.getElementById('set-shoulder').value, rep: document.getElementById('rep-shoulder').value }
     ];
 
     let logsTersimpan = JSON.parse(localStorage.getItem('gym_logs')) || [];
@@ -279,7 +309,6 @@ function simpanSesiLatihan() {
     groupGerakan.forEach(item => {
         if (item.set > 0 && item.rep > 0) {
             adaDataDinput = true;
-            // Buat struktur objek log latihan
             const logBaru = {
                 tanggal: `${tanggalStr} (${waktuStr})`,
                 gerakan: item.nama,
@@ -287,8 +316,7 @@ function simpanSesiLatihan() {
                 rep: item.rep,
                 durasi: durasi
             };
-            // Masukkan di urutan paling atas
-            logsTersimpan.unshift(logBaru);
+            logsTersimpan.unshift(logBaru); // Masukkan di baris paling atas
         }
     });
 
@@ -297,11 +325,9 @@ function simpanSesiLatihan() {
         return;
     }
 
-    // Simpan kembali ke memori HP
     localStorage.setItem('gym_logs', JSON.stringify(logsTersimpan));
     
-    // Reset form input & stopwatch
-    document.querySelectorAll('.input-latihan').forEach(input => input.value = "");
+    // Reset Stopwatch saja ke awal, input angka dibiarkan sebagai referensi latihan berikutnya
     clearInterval(timer);
     detik = 0; menit = 0; jam = 0;
     displayStopwatch.innerText = "00:00:00";
@@ -310,7 +336,7 @@ function simpanSesiLatihan() {
     document.getElementById('btn-pause').classList.add('hidden');
     document.getElementById('btn-stop').setAttribute('disabled', true);
 
-    alert("Data latihan berhasil disimpan secara lokal!");
+    alert("Data latihan berhasil disimpan secara lokal ke memori HP!");
     tampilkanRiwayat();
 }
 
@@ -326,14 +352,13 @@ function tampilkanRiwayat() {
         return;
     }
 
-    // Batasi data sesuai limit yang aktif (5, 10, 15, 20)
     const dataTerbatas = logs.slice(0, limitData);
 
     dataTerbatas.forEach(log => {
         const row = document.createElement('tr');
         row.className = "border-b border-slate-700/50 hover:bg-slate-700/30";
         row.innerHTML = `
-            <td class="p-2 text-[11px] text-slate-400 font-medium">${log.tanggal}</td>
+            <td class="p-2 text-[10px] text-slate-400 font-medium">${log.tanggal}</td>
             <td class="p-2 font-semibold text-indigo-300">${log.gerakan}</td>
             <td class="p-2 text-emerald-400 font-mono">${log.set} Set x ${log.rep} Reps</td>
             <td class="p-2 text-slate-400 font-mono">${log.durasi}</td>
@@ -344,8 +369,6 @@ function tampilkanRiwayat() {
 
 function ubahLimit(jumlah) {
     limitData = jumlah;
-    
-    // Atur efek aktif tombol limit
     [5, 10, 15, 20].forEach(num => {
         const btn = document.getElementById(`lim-${num}`);
         if(num === jumlah) {
@@ -354,10 +377,42 @@ function ubahLimit(jumlah) {
             btn.classList.remove('bg-indigo-600', 'font-bold');
         }
     });
-    
     tampilkanRiwayat();
+}
+
+// --- FITUR BACKUP & RESTORE DATA ---
+function eksporData() {
+    const data = localStorage.getItem('gym_logs');
+    if (!data || data === "[]") {
+        alert("Belum ada data latihan untuk di-backup!");
+        return;
+    }
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `backup_gym_latihan.json`;
+    a.click();
+}
+
+function imporData(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const dataStr = e.target.result;
+            JSON.parse(dataStr); 
+            localStorage.setItem('gym_logs', dataStr);
+            alert("Data latihan berhasil dipulihkan!");
+            tampilkanRiwayat();
+        } catch (err) {
+            alert("File tidak valid atau rusak!");
+        }
+    };
+    reader.readAsText(file);
 }
 </script>
 </body>
 </html>
-
