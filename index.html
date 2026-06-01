@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <style>
-        /* Transisi halus saat ganti tema */
         body { transition: background-color 0.3s, color 0.3s; }
         .card-theme { transition: background-color 0.3s, border-color 0.3s; }
     </style>
@@ -67,8 +66,7 @@
                 <span class="text-xs text-slate-400">Tahan & Geser Kategori ↕️</span>
             </div>
             
-            <div id="program-list" class="space-y-4">
-                </div>
+            <div id="program-list" class="space-y-4"></div>
 
             <button onclick="simpanSesiLatihan()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition shadow-lg text-white">
                 Simpan Sesi Latihan
@@ -120,8 +118,6 @@
     </div>
 
 <script>
-// --- MANAGEMENT DATA STRUCTURE (STRUKTUR DATA STRATEGIS) ---
-// Default template jika user baru pertama kali membuka aplikasi
 const defaultKategoriOtot = [
     { id: "otot_chest", nama: "胸 Chest (Otot Dada)", deskripsi: "Fokus: Dada bidang dan kekuatan mendorong." },
     { id: "otot_back", nama: "🦅 Back (Otot Punggung)", deskripsi: "Fokus: Postur tubuh tegap & berbentuk V-Shape." },
@@ -129,7 +125,7 @@ const defaultKategoriOtot = [
     { id: "otot_legs", nama: "🦵 Legs & Shoulder (Kaki & Bahu)", deskripsi: "Fokus: Membakar kalori & pondasi bawah." }
 ];
 
-const defaultGerakan Latihan = [
+const defaultGerakanLatihan = [
     { id_kat: "otot_chest", nama: "Push-Up" },
     { id_kat: "otot_chest", nama: "Flat Bench Press" },
     { id_kat: "otot_back", nama: "Lat Pulldown" },
@@ -157,7 +153,6 @@ window.onload = function() {
     const temaTersimpan = localStorage.getItem('gym_theme');
     if (temaTersimpan === "terang") terapkanTemaTerang();
     
-    // Ambil data lokal dari HP atau gunakan default template
     databaseOtot = JSON.parse(localStorage.getItem('db_otot')) || defaultKategoriOtot;
     databaseGerakan = JSON.parse(localStorage.getItem('db_gerakan')) || defaultGerakanLatihan;
 
@@ -172,12 +167,9 @@ window.onload = function() {
     loadUrutanProgram();
 };
 
-// --- CORE ENGINE: RENDER MAKER ---
 function renderAplikasiSistem() {
     elList.innerHTML = "";
-
     databaseOtot.forEach(otot => {
-        // Buat container box untuk tiap kelompok otot
         const cardOtot = document.createElement('div');
         cardOtot.className = "bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move card-theme";
         cardOtot.setAttribute('data-id', otot.id);
@@ -188,13 +180,10 @@ function renderAplikasiSistem() {
                 <button onclick="hapusKategoriOtot('${otot.id}')" class="text-rose-400 hover:text-rose-500 text-xs">✕ Hapus</button>
             </div>
             ${otot.deskripsi ? `<p class="text-[11px] text-slate-400 mb-2">${otot.deskripsi}</p>` : ''}
-            
             <div class="space-y-3 dynamic-exercise-group" data-kategori="${otot.id}">
         `;
 
-        // Filter gerakan yang masuk ke otot ini
         const listGerakanTerkait = databaseGerakan.filter(g => g.id_kat === otot.id);
-
         listGerakanTerkait.forEach((gerakan, index) => {
             htmlContent += `
                 <div class="flex items-center justify-between gap-2 text-sm row-item-latihan" data-nama="${gerakan.nama}">
@@ -210,7 +199,6 @@ function renderAplikasiSistem() {
             `;
         });
 
-        // Bagian Akhir: Input Form Mini Khusus di dalam kategori otot ini
         htmlContent += `
             </div>
             <div class="mt-3 pt-2 border-t border-slate-700/50 flex gap-2">
@@ -221,28 +209,18 @@ function renderAplikasiSistem() {
                 </button>
             </div>
         `;
-
         cardOtot.innerHTML = htmlContent;
         elList.appendChild(cardOtot);
     });
-
     if (temaAktif === "terang") sinkronisasiWarnaInputTerang();
 }
 
-// --- LOGIKA FORM INPUT DINAMIS ---
 function tambahKelompokOtot() {
     const namaKategori = document.getElementById('input-otot-baru').value.trim();
     if (!namaKategori) { alert("Nama kelompok otot tidak boleh kosong!"); return; }
-
     const idBaru = "otot_" + Date.now();
-    databaseOtot.push({
-        id: idBaru,
-        nama: namaKategori,
-        deskripsi: "Kategori otot kustom buatan Anda."
-    });
-
-    saveDatabaseToStorage();
-    renderAplikasiSistem();
+    databaseOtot.push({ id: idBaru, nama: namaKategori, deskripsi: "Kategori otot kustom buatan Anda." });
+    saveDatabaseToStorage(); renderAplikasiSistem();
     document.getElementById('input-otot-baru').value = "";
 }
 
@@ -250,8 +228,7 @@ function hapusKategoriOtot(idKat) {
     if (confirm("Hapus kategori otot ini beserta seluruh daftar gerakannya?")) {
         databaseOtot = databaseOtot.filter(o => o.id !== idKat);
         databaseGerakan = databaseGerakan.filter(g => g.id_kat !== idKat);
-        saveDatabaseToStorage();
-        renderAplikasiSistem();
+        saveDatabaseToStorage(); renderAplikasiSistem();
     }
 }
 
@@ -259,20 +236,15 @@ function tambahGerakanKeOtot(idKat) {
     const inputEl = document.getElementById(`add-input-${idKat}`);
     const namaGerakan = inputEl.value.trim();
     if (!namaGerakan) { alert("Nama gerakan tidak boleh kosong!"); return; }
-
-    // Validasi duplikasi gerakan di kategori yang sama
     const cekDuplikat = databaseGerakan.some(g => g.id_kat === idKat && g.nama.toLowerCase() === namaGerakan.toLowerCase());
     if (cekDuplikat) { alert("Gerakan ini sudah terdaftar di kategori ini!"); return; }
-
     databaseGerakan.push({ id_kat: idKat, nama: namaGerakan });
-    saveDatabaseToStorage();
-    renderAplikasiSistem();
+    saveDatabaseToStorage(); renderAplikasiSistem();
 }
 
 function hapusGerakanLatihan(idKat, namaGerakan) {
     databaseGerakan = databaseGerakan.filter(g => !(g.id_kat === idKat && g.nama === namaGerakan));
-    saveDatabaseToStorage();
-    renderAplikasiSistem();
+    saveDatabaseToStorage(); renderAplikasiSistem();
 }
 
 function saveDatabaseToStorage() {
@@ -291,12 +263,10 @@ function bukaDashboard(nama) {
     loginScreen.classList.add('hidden');
     mainDashboard.classList.remove('hidden');
     document.getElementById('sapaan-nama').innerText = nama;
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    updateDateTime(); setInterval(updateDateTime, 1000);
     tampilkanRiwayat();
 }
 
-// --- LOGIKA TEMA (TERANG / GELAP) ---
 function toggleTema() { if (temaAktif === "gelap") { terapkanTemaTerang(); } else { terapkanTemaGelap(); } }
 
 function terapkanTemaTerang() {
@@ -305,7 +275,6 @@ function terapkanTemaTerang() {
     bodyEl.classList.remove('bg-slate-900', 'text-white'); bodyEl.classList.add('bg-slate-100', 'text-slate-800');
     document.getElementById('title-program').className = "text-lg font-bold text-slate-800";
     document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-800";
-    
     document.querySelectorAll('.card-theme').forEach(card => {
         card.classList.remove('bg-slate-800', 'border-slate-700'); card.classList.add('bg-white', 'border-slate-200');
     });
@@ -323,7 +292,6 @@ function terapkanTemaGelap() {
     bodyEl.classList.remove('bg-slate-100', 'text-slate-800'); bodyEl.classList.add('bg-slate-900', 'text-white');
     document.getElementById('title-program').className = "text-lg font-bold text-slate-200";
     document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-200";
-    
     document.querySelectorAll('.card-theme').forEach(card => {
         card.classList.remove('bg-white', 'border-slate-200'); card.classList.add('bg-slate-800', 'border-slate-700');
     });
@@ -343,14 +311,12 @@ function sinkronisasiWarnaInputTerang() {
     });
 }
 
-// --- LOGIKA REALTIME & STOPWATCH ---
 function updateDateTime() {
     const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const sekarang = new Date();
-    document.getElementById('real-date').innerText = ClinicalDate(sekarang, opsiTanggal);
+    document.getElementById('real-date').innerText = sekarang.toLocaleDateString('id-ID', opsiTanggal);
     document.getElementById('real-time').innerText = sekarang.toLocaleTimeString('id-ID') + " WIB";
 }
-function ClinicalDate(s, o) { return s.toLocaleDateString('id-ID', o); }
 
 function startTimer() {
     document.getElementById('btn-start').classList.add('hidden');
@@ -367,7 +333,6 @@ function startTimer() {
 function pauseTimer() { document.getElementById('btn-pause').classList.add('hidden'); document.getElementById('btn-start').classList.remove('hidden'); document.getElementById('btn-start').innerText = "Lanjutkan"; clearInterval(timer); }
 function stopTimer() { clearInterval(timer); alert("Sesi latihan selesai! Waktu terhitung: " + displayStopwatch.innerText); }
 
-// --- DRAG & DROP PROGRAM ---
 Sortable.create(elList, {
     animation: 150, ghostClass: 'bg-indigo-900',
     onEnd: function () {
@@ -384,17 +349,15 @@ function loadUrutanProgram() {
     }
 }
 
-// --- PENYIMPANAN DATA SESSIONS ---
 function simpanSesiLatihan() {
     const durasi = displayStopwatch.innerText;
     const sekarang = new Date();
     const tanggalStr = sekarang.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-    const waktuStr = sekarang.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':');
+    const waktuStr = ClinicalTime(sekarang);
 
     let logsTersimpan = JSON.parse(localStorage.getItem('gym_logs')) || [];
     let adaDataDinput = false;
 
-    // Membaca baris dinamis dari DOM HTML
     document.querySelectorAll('.row-item-latihan').forEach(row => {
         const namaLatihan = row.getAttribute('data-nama');
         const setVal = row.querySelector('.field-set').value;
@@ -418,18 +381,14 @@ function simpanSesiLatihan() {
     }
 
     localStorage.setItem('gym_logs', JSON.stringify(logsTersimpan));
-    
-    // Reset seluruh kolom input pengisian & Stopwatch
     document.querySelectorAll('.row-item-latihan input').forEach(input => input.value = "");
     clearInterval(timer); detik = 0; menit = 0; jam = 0; displayStopwatch.innerText = "00:00:00";
     document.getElementById('btn-start').classList.remove('hidden'); document.getElementById('btn-start').innerText = "Mulai";
     document.getElementById('btn-pause').classList.add('hidden'); document.getElementById('btn-stop').setAttribute('disabled', true);
-
-    alert("Data latihan berhasil disimpan!");
-    tampilkanRiwayat();
+    alert("Data latihan berhasil disimpan!"); tampilkanRiwayat();
 }
+function ClinicalTime(s) { return s.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':'); }
 
-// --- MENAMPILKAN RIWAYAT & LIMIT ---
 function tampilkanRiwayat() {
     const tbody = document.getElementById('tabel-riwayat-body'); tbody.innerHTML = "";
     const logs = JSON.parse(localStorage.getItem('gym_logs')) || [];
@@ -462,17 +421,12 @@ function ubahLimit(jumlah) {
     tampilkanRiwayat();
 }
 
-// --- FITUR BACKUP & RESTORE ---
 function eksporData() {
-    const logs = localStorage.getItem('gym_logs');
-    const otot = localStorage.getItem('db_otot');
-    const gerakan = localStorage.getItem('db_gerakan');
-    
+    const logs = localStorage.getItem('gym_logs'); const otot = localStorage.getItem('db_otot'); const gerakan = localStorage.getItem('db_gerakan');
     const masterBackup = { gym_logs: logs, db_otot: otot, db_gerakan: gerakan };
     const blob = new Blob([JSON.stringify(masterBackup)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `backup_full_gymtracker.json`; a.click();
+    const a = document.createElement('a'); a.href = url; a.download = `backup_full_gymtracker.json`; a.click();
 }
 
 function imporData(input) {
@@ -484,16 +438,14 @@ function imporData(input) {
             if(dataObj.gym_logs) localStorage.setItem('gym_logs', dataObj.gym_logs);
             if(dataObj.db_otot) localStorage.setItem('db_otot', dataObj.db_otot);
             if(dataObj.db_gerakan) localStorage.setItem('db_gerakan', dataObj.db_gerakan);
-            
-            alert("Seluruh data menu kustom & riwayat sukses dipulihkan!");
-            location.reload();
+            alert("Seluruh data menu kustom & riwayat sukses dipulihkan!"); location.reload();
         } catch (err) { alert("File backup rusak atau tidak valid!"); }
     };
     reader.readAsText(file);
 }
 
 function resetSemuaData() {
-    if (confirm("Apakah kamu yakin ingin mereset data? Tindakan ini akan menghapus semua riwayat latihan, nama, dan KATEGORI KUSTOM.")) {
+    if (confirm("Apakah kamu yakin ingin mereset data?")) {
         if (confirm("Peringatan terakhir! Semua data akan hilang permanen. Lanjutkan reset?")) {
             localStorage.clear(); alert("Semua data berhasil dibersihkan."); location.reload();
         }
