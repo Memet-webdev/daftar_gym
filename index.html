@@ -3,25 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Tracker - Kustomisasi Total</title>
+    <title>Gym Tracker - Perbaikan Geser & Tema</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
     <style>
         body { transition: background-color 0.3s, color 0.3s; }
         .card-theme { transition: background-color 0.3s, border-color 0.3s; }
+        ion-icon {
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+        /* Penanda visual area yang bisa ditarik agar user paham */
+        .drag-handle-trigger {
+            cursor: grab;
+        }
+        .drag-handle-trigger:active {
+            cursor: grabbing;
+        }
     </style>
 </head>
 <body id="body-element" class="bg-slate-900 text-white font-sans antialiased pb-12">
 
     <div id="login-screen" class="fixed inset-0 bg-slate-900 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-slate-800 p-6 rounded-2xl shadow-xl w-full max-w-sm border border-slate-700 card-theme">
-            <h2 class="text-2xl font-bold text-center mb-2 text-indigo-400">Selamat Datang!</h2>
+            <h2 class="text-2xl font-bold text-center mb-2 text-indigo-400 flex items-center justify-center gap-2">
+                <ion-icon name="fitness-outline"></ion-icon> Selamat Datang!
+            </h2>
             <p class="text-sm text-slate-400 text-center mb-6">Masukkan nama kamu untuk memulai program latihan.</p>
             <input type="text" id="input-nama" placeholder="Nama Kamu" 
                    class="w-full px-4 py-3 bg-slate-700 rounded-xl mb-4 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <button onclick="simpanNama()" 
-                    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition duration-200">
-                Masuk ke Dashboard
+                    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-xl transition duration-200 flex items-center justify-center gap-2">
+                Masuk ke Dashboard <ion-icon name="log-in-outline"></ion-icon>
             </button>
         </div>
     </div>
@@ -29,53 +46,76 @@
     <div id="main-dashboard" class="max-w-md mx-auto px-4 pt-6 hidden">
         
         <header id="header-card" class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-md mb-4 text-center card-theme relative">
-            <button onclick="toggleTema()" id="theme-toggle-btn" class="absolute top-3 right-3 bg-slate-700 hover:bg-slate-600 p-2 rounded-xl text-xs transition text-white">
-                ☀️ Terang
+            <button onclick="toggleTema()" id="theme-toggle-btn" class="absolute top-3 right-3 bg-slate-700 hover:bg-slate-600 px-3 py-1.5 rounded-xl text-xs transition text-white flex items-center gap-1">
+                <ion-icon name="sunny-outline" id="theme-icon"></ion-icon> <span id="theme-text">Terang</span>
             </button>
-            <h1 class="text-xl text-slate-400">Halo, <span id="sapaan-nama" class="text-indigo-400 font-bold text-2xl">User</span>! 👋</h1>
+            <h1 class="text-xl text-slate-400 flex items-center justify-center gap-2">
+                Halo, <span id="sapaan-nama" class="text-indigo-400 font-bold text-2xl">User</span>! 
+                <ion-icon name="sparkles" class="text-amber-400"></ion-icon>
+            </h1>
             <div class="mt-3 text-sm text-slate-300">
-                <div id="real-date" class="font-semibold"></div>
-                <div id="real-time" class="text-xs text-slate-400 mt-1"></div>
+                <div id="real-date" class="font-semibold flex items-center justify-center gap-1.5">
+                    <ion-icon name="calendar-outline" class="text-indigo-400"></ion-icon> <span id="date-text"></span>
+                </div>
+                <div id="real-time" class="text-xs text-slate-400 mt-1 flex items-center justify-center gap-1.5">
+                    <ion-icon name="time-outline" class="text-slate-500"></ion-icon> <span id="time-text-el"></span>
+                </div>
             </div>
         </header>
 
         <section id="stopwatch-card" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-md mb-6 text-center card-theme">
-            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">Waktu Ngegym Anda</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400 flex items-center justify-center gap-1">
+                <ion-icon name="stopwatch-outline"></ion-icon> Waktu Ngegym Anda
+            </span>
             <div id="stopwatch-display" class="text-4xl font-mono font-bold my-3 text-emerald-400">00:00:00</div>
             <div class="flex justify-center gap-3">
-                <button id="btn-start" onclick="startTimer()" class="bg-emerald-600 hover:bg-emerald-500 px-5 py-2 rounded-xl text-sm font-semibold transition text-white">Mulai</button>
-                <button id="btn-pause" onclick="pauseTimer()" class="bg-amber-600 hover:bg-amber-500 px-5 py-2 rounded-xl text-sm font-semibold transition hidden text-white">Pause</button>
-                <button id="btn-stop" onclick="stopTimer()" class="bg-rose-600 hover:bg-rose-500 px-5 py-2 rounded-xl text-sm font-semibold transition text-white" disabled>Selesai</button>
+                <button id="btn-start" onclick="startTimer()" class="bg-emerald-600 hover:bg-emerald-500 px-5 py-2 rounded-xl text-sm font-semibold transition text-white flex items-center gap-1">
+                    <ion-icon name="play"></ion-icon> Mulai
+                </button>
+                <button id="btn-pause" onclick="pauseTimer()" class="bg-amber-600 hover:bg-amber-500 px-5 py-2 rounded-xl text-sm font-semibold transition hidden text-white flex items-center gap-1">
+                    <ion-icon name="pause"></ion-icon> Pause
+                </button>
+                <button id="btn-stop" onclick="stopTimer()" class="bg-rose-600 hover:bg-rose-500 px-5 py-2 rounded-xl text-sm font-semibold transition text-white flex items-center gap-1" disabled>
+                    <ion-icon name="checkmark-circle"></ion-icon> Selesai
+                </button>
             </div>
         </section>
 
         <section id="form-otot-card" class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-md mb-6 card-theme">
-            <h3 class="text-sm font-bold text-indigo-400 mb-2">🧱 Tambah Kelompok Otot / Kategori Baru</h3>
+            <h3 class="text-sm font-bold text-indigo-400 mb-2 flex items-center gap-1">
+                <ion-icon name="cube-outline"></ion-icon> Tambah Kelompok Otot / Kategori Baru
+            </h3>
             <div class="flex gap-2">
-                <input type="text" id="input-otot-baru" placeholder="Misal: 🍫 Abs, 🏃 Cardio, Bahu..." 
+                <input type="text" id="input-otot-baru" placeholder="Misal: Abs, Cardio, Bahu..." 
                        class="w-full px-3 py-2 text-xs bg-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 input-field-theme">
-                <button onclick="tambahKelompokOtot()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-xs font-bold rounded-xl transition whitespace-nowrap text-white">
-                    + Kategori
+                <button onclick="tambahKelompokOtot()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-xs font-bold rounded-xl transition whitespace-nowrap text-white flex items-center gap-1">
+                    <ion-icon name="add-circle-outline"></ion-icon> Kategori
                 </button>
             </div>
         </section>
 
         <section class="mb-6">
             <div class="flex justify-between items-center mb-3">
-                <h2 id="title-program" class="text-lg font-bold text-slate-200">Daftar Menu Latihan</h2>
-                <span class="text-xs text-slate-400">Tahan & Geser Kategori ↕️</span>
+                <h2 id="title-program" class="text-lg font-bold text-slate-200 flex items-center gap-1.5">
+                    <ion-icon name="list-box" class="text-indigo-400"></ion-icon> Daftar Menu Latihan
+                </h2>
+                <span class="text-xs text-slate-400 flex items-center gap-1">
+                    Geser Gagang Kiri <ion-icon name="resize-outline"></ion-icon>
+                </span>
             </div>
             
             <div id="program-list" class="space-y-4"></div>
 
-            <button onclick="simpanSesiLatihan()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition shadow-lg text-white">
-                Simpan Sesi Latihan
+            <button onclick="simpanSesiLatihan()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition shadow-lg text-white flex items-center justify-center gap-2">
+                <ion-icon name="save-outline"></ion-icon> Simpan Sesi Latihan
             </button>
         </section>
 
         <section id="riwayat-card" class="bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-md mb-6 card-theme">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                <h2 id="title-riwayat" class="text-lg font-bold text-slate-200">Riwayat Latihan</h2>
+                <h2 id="title-riwayat" class="text-lg font-bold text-slate-200 flex items-center gap-1.5">
+                    <ion-icon name="stats-chart-outline" class="text-indigo-400"></ion-icon> Riwayat Latihan
+                </h2>
                 <div id="limit-box" class="flex gap-1 bg-slate-700 p-1 rounded-lg self-end">
                     <button onclick="ubahLimit(5)" id="lim-5" class="px-2 py-1 text-xs rounded bg-indigo-600 font-bold text-white">5</button>
                     <button onclick="ubahLimit(10)" id="lim-10" class="px-2 py-1 text-xs rounded text-white">10</button>
@@ -99,19 +139,19 @@
             </div>
 
             <div id="backup-box" class="flex gap-2 pt-2 border-t border-slate-700">
-                <button onclick="eksporData()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium text-white">
-                    💾 Backup Data (Unduh)
+                <button onclick="eksporData()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium text-white flex items-center justify-center gap-1">
+                    <ion-icon name="cloud-download-outline"></ion-icon> Backup Data (Unduh)
                 </button>
-                <button onclick="document.getElementById('input-file-backup').click()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium text-white">
-                    📂 Restore Data (Upload)
+                <button onclick="document.getElementById('input-file-backup').click()" class="w-1/2 bg-slate-700 hover:bg-slate-600 text-xs py-2 rounded-lg text-center font-medium text-white flex items-center justify-center gap-1">
+                    <ion-icon name="cloud-upload-outline"></ion-icon> Restore Data (Upload)
                 </button>
                 <input type="file" id="input-file-backup" class="hidden" onchange="imporData(this)">
             </div>
         </section>
 
         <div class="px-2">
-            <button onclick="resetSemuaData()" class="w-full bg-rose-700/30 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/30 text-xs py-3 rounded-xl font-semibold transition tracking-wide shadow-sm">
-                ⚠️ Hapus & Reset Semua Data Aplikasi
+            <button onclick="resetSemuaData()" class="w-full bg-rose-700/30 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/30 text-xs py-3 rounded-xl font-semibold transition tracking-wide shadow-sm flex items-center justify-center gap-1">
+                <ion-icon name="trash-outline"></ion-icon> Hapus & Reset Semua Data Aplikasi
             </button>
         </div>
 
@@ -119,10 +159,10 @@
 
 <script>
 const defaultKategoriOtot = [
-    { id: "otot_chest", nama: "胸 Chest (Otot Dada)", deskripsi: "Fokus: Dada bidang dan kekuatan mendorong." },
-    { id: "otot_back", nama: "🦅 Back (Otot Punggung)", deskripsi: "Fokus: Postur tubuh tegap & berbentuk V-Shape." },
-    { id: "otot_arms", nama: "💪 Arms (Otot Lengan)", deskripsi: "Fokus: Otot Bicep & Tricep." },
-    { id: "otot_legs", nama: "🦵 Legs & Shoulder (Kaki & Bahu)", deskripsi: "Fokus: Membakar kalori & pondasi bawah." }
+    { id: "otot_chest", nama: "Chest (Otot Dada)", icon: "barbell-outline", deskripsi: "Fokus: Dada bidang dan kekuatan mendorong." },
+    { id: "otot_back", nama: "Back (Otot Punggung)", icon: "body-outline", deskripsi: "Fokus: Postur tubuh tegap & berbentuk V-Shape." },
+    { id: "otot_arms", nama: "Arms (Otot Lengan)", icon: "trophy-outline", deskripsi: "Fokus: Otot Bicep & Tricep." },
+    { id: "otot_legs", nama: "Legs & Shoulder (Kaki & Bahu)", icon: "walk-outline", deskripsi: "Fokus: Membakar kalori & pondasi bawah." }
 ];
 
 const defaultGerakanLatihan = [
@@ -151,12 +191,19 @@ const elList = document.getElementById('program-list');
 
 window.onload = function() {
     const temaTersimpan = localStorage.getItem('gym_theme');
-    if (temaTersimpan === "terang") terapkanTemaTerang();
+    if (temaTersimpan === "terang") temaAktif = "terang"; // Set variabel temaAktif sebelum render
     
     databaseOtot = JSON.parse(localStorage.getItem('db_otot')) || defaultKategoriOtot;
     databaseGerakan = JSON.parse(localStorage.getItem('db_gerakan')) || defaultGerakanLatihan;
 
     renderAplikasiSistem();
+
+    // Jalankan sinkronisasi visual tema agar kondisi awal akurat
+    if (temaAktif === "terang") {
+        terapkanTemaTerang();
+    } else {
+        terapkanTemaGelap();
+    }
 
     const namaTersimpan = localStorage.getItem('gym_user_name');
     if (!namaTersimpan) {
@@ -171,13 +218,24 @@ function renderAplikasiSistem() {
     elList.innerHTML = "";
     databaseOtot.forEach(otot => {
         const cardOtot = document.createElement('div');
-        cardOtot.className = "bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm cursor-move card-theme";
+        cardOtot.className = "bg-slate-800 p-4 rounded-2xl border border-slate-700 shadow-sm card-theme";
         cardOtot.setAttribute('data-id', otot.id);
+
+        const namaIkon = otot.icon || "fitness-outline";
 
         let htmlContent = `
             <div class="flex justify-between items-center border-b border-slate-700 pb-1 mb-2">
-                <h3 class="font-bold text-indigo-400">${otot.nama}</h3>
-                <button onclick="hapusKategoriOtot('${otot.id}')" class="text-rose-400 hover:text-rose-500 text-xs">✕ Hapus</button>
+                <div class="flex items-center gap-2">
+                    <div class="drag-handle-trigger text-slate-400 p-1 hover:text-indigo-400 flex items-center">
+                        <ion-icon name="menu-outline"></ion-icon>
+                    </div>
+                    <h3 class="font-bold text-indigo-400 flex items-center gap-1.5">
+                        <ion-icon name="${namaIkon}"></ion-icon> ${otot.nama}
+                    </h3>
+                </div>
+                <button onclick="hapusKategoriOtot('${otot.id}')" class="text-rose-400 hover:text-rose-500 text-xs flex items-center gap-0.5">
+                    <ion-icon name="close-circle-outline"></ion-icon> Hapus
+                </button>
             </div>
             ${otot.deskripsi ? `<p class="text-[11px] text-slate-400 mb-2">${otot.deskripsi}</p>` : ''}
             <div class="space-y-3 dynamic-exercise-group" data-kategori="${otot.id}">
@@ -188,7 +246,9 @@ function renderAplikasiSistem() {
             htmlContent += `
                 <div class="flex items-center justify-between gap-2 text-sm row-item-latihan" data-nama="${gerakan.nama}">
                     <div class="w-1/2 flex items-center gap-1.5">
-                        <button onclick="hapusGerakanLatihan('${otot.id}', '${gerakan.nama}')" class="text-slate-500 hover:text-rose-400 text-[11px]">✕</button>
+                        <button onclick="hapusGerakanLatihan('${otot.id}', '${gerakan.nama}')" class="text-slate-500 hover:text-rose-400 flex items-center">
+                            <ion-icon name="close-outline" style="font-size: 14px;"></ion-icon>
+                        </button>
                         <span class="font-medium">${index + 1}. ${gerakan.nama}</span>
                     </div>
                     <div class="flex gap-1 w-1/2 justify-end">
@@ -204,28 +264,42 @@ function renderAplikasiSistem() {
             <div class="mt-3 pt-2 border-t border-slate-700/50 flex gap-2">
                 <input type="text" id="add-input-${otot.id}" placeholder="Tambah gerakan baru..." 
                        class="w-full px-2 py-1 bg-slate-700 rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none input-field-theme">
-                <button onclick="tambahGerakanKeOtot('${otot.id}')" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-1 rounded-lg text-xs font-bold text-white transition">
-                    +
+                <button onclick="tambahGerakanKeOtot('${otot.id}')" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-1 rounded-lg text-xs font-bold text-white transition flex items-center justify-center">
+                    <ion-icon name="add-outline"></ion-icon>
                 </button>
             </div>
         `;
         cardOtot.innerHTML = htmlContent;
         elList.appendChild(cardOtot);
     });
-    if (temaAktif === "terang") sinkronisasiWarnaInputTerang();
+
+    // Otomatis sesuaikan warna komponen baru jika tema terang sedang aktif
+    if (temaAktif === "terang") perbaruiWarnaKartuRealtime();
+}
+
+// Fungsi internal khusus untuk menjaga konsistensi warna kartu pasca aksi perubahan (Geser / Hapus)
+function perbaruiWarnaKartuRealtime() {
+    document.querySelectorAll('.card-theme').forEach(card => {
+        card.classList.remove('bg-slate-800', 'border-slate-700'); 
+        card.classList.add('bg-white', 'border-slate-200');
+    });
+    document.querySelectorAll('.input-field-theme').forEach(input => {
+        input.classList.remove('bg-slate-700', 'text-white'); 
+        input.classList.add('bg-slate-200', 'text-slate-900');
+    });
 }
 
 function tambahKelompokOtot() {
     const namaKategori = document.getElementById('input-otot-baru').value.trim();
     if (!namaKategori) { alert("Nama kelompok otot tidak boleh kosong!"); return; }
     const idBaru = "otot_" + Date.now();
-    databaseOtot.push({ id: idBaru, nama: namaKategori, deskripsi: "Kategori otot kustom buatan Anda." });
+    databaseOtot.push({ id: idBaru, nama: namaKategori, icon: "build-outline", deskripsi: "Kategori otot kustom buatan Anda." });
     saveDatabaseToStorage(); renderAplikasiSistem();
     document.getElementById('input-otot-baru').value = "";
 }
 
 function hapusKategoriOtot(idKat) {
-    if (confirm("Hapus kategori otot ini beserta seluruh daftar gerakannya?")) {
+    if (confirm("Apakah Anda yakin ingin menghapus kategori otot ini beserta SELURUH daftar gerakannya?")) {
         databaseOtot = databaseOtot.filter(o => o.id !== idKat);
         databaseGerakan = databaseGerakan.filter(g => g.id_kat !== idKat);
         saveDatabaseToStorage(); renderAplikasiSistem();
@@ -243,8 +317,10 @@ function tambahGerakanKeOtot(idKat) {
 }
 
 function hapusGerakanLatihan(idKat, namaGerakan) {
-    databaseGerakan = databaseGerakan.filter(g => !(g.id_kat === idKat && g.nama === namaGerakan));
-    saveDatabaseToStorage(); renderAplikasiSistem();
+    if (confirm(`Apakah Anda yakin ingin menghapus gerakan "${namaGerakan}"?`)) {
+        databaseGerakan = databaseGerakan.filter(g => !(g.id_kat === idKat && g.nama === namaGerakan));
+        saveDatabaseToStorage(); renderAplikasiSistem();
+    }
 }
 
 function saveDatabaseToStorage() {
@@ -260,25 +336,21 @@ function simpanNama() {
 }
 
 function bukaDashboard(nama) {
-    loginScreen.classList.add('hidden');
-    mainDashboard.classList.remove('hidden');
+    loginScreen.classList.add('hidden'); mainDashboard.classList.remove('hidden');
     document.getElementById('sapaan-nama').innerText = nama;
-    updateDateTime(); setInterval(updateDateTime, 1000);
-    tampilkanRiwayat();
+    updateDateTime(); setInterval(updateDateTime, 1000); tampilkanRiwayat();
 }
 
 function toggleTema() { if (temaAktif === "gelap") { terapkanTemaTerang(); } else { terapkanTemaGelap(); } }
 
 function terapkanTemaTerang() {
     temaAktif = "terang"; localStorage.setItem('gym_theme', 'terang');
-    document.getElementById('theme-toggle-btn').innerText = "🌙 Gelap";
+    document.getElementById('theme-text').innerText = "Gelap";
+    document.getElementById('theme-icon').setAttribute('name', 'moon-outline');
     bodyEl.classList.remove('bg-slate-900', 'text-white'); bodyEl.classList.add('bg-slate-100', 'text-slate-800');
-    document.getElementById('title-program').className = "text-lg font-bold text-slate-800";
-    document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-800";
-    document.querySelectorAll('.card-theme').forEach(card => {
-        card.classList.remove('bg-slate-800', 'border-slate-700'); card.classList.add('bg-white', 'border-slate-200');
-    });
-    sinkronisasiWarnaInputTerang();
+    document.getElementById('title-program').className = "text-lg font-bold text-slate-800 flex items-center gap-1.5";
+    document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-800 flex items-center gap-1.5";
+    perbaruiWarnaKartuRealtime();
     document.getElementById('limit-box').className = "flex gap-1 bg-slate-200 p-1 rounded-lg self-end";
     document.getElementById('backup-box').className = "flex gap-2 pt-2 border-t border-slate-200";
     document.getElementById('tabel-head').className = "bg-slate-200 text-slate-700 uppercase text-[10px]";
@@ -288,10 +360,11 @@ function terapkanTemaTerang() {
 
 function terapkanTemaGelap() {
     temaAktif = "gelap"; localStorage.setItem('gym_theme', 'gelap');
-    document.getElementById('theme-toggle-btn').innerText = "☀️ Terang";
+    document.getElementById('theme-text').innerText = "Terang";
+    document.getElementById('theme-icon').setAttribute('name', 'sunny-outline');
     bodyEl.classList.remove('bg-slate-100', 'text-slate-800'); bodyEl.classList.add('bg-slate-900', 'text-white');
-    document.getElementById('title-program').className = "text-lg font-bold text-slate-200";
-    document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-200";
+    document.getElementById('title-program').className = "text-lg font-bold text-slate-200 flex items-center gap-1.5";
+    document.getElementById('title-riwayat').className = "text-lg font-bold text-slate-200 flex items-center gap-1.5";
     document.querySelectorAll('.card-theme').forEach(card => {
         card.classList.remove('bg-white', 'border-slate-200'); card.classList.add('bg-slate-800', 'border-slate-700');
     });
@@ -305,18 +378,13 @@ function terapkanTemaGelap() {
     tampilkanRiwayat();
 }
 
-function sinkronisasiWarnaInputTerang() {
-    document.querySelectorAll('.input-field-theme').forEach(input => {
-        input.classList.remove('bg-slate-700', 'text-white'); input.classList.add('bg-slate-200', 'text-slate-900');
-    });
-}
-
 function updateDateTime() {
     const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const sekarang = new Date();
-    document.getElementById('real-date').innerText = sekarang.toLocaleDateString('id-ID', opsiTanggal);
-    document.getElementById('real-time').innerText = sekarang.toLocaleTimeString('id-ID') + " WIB";
+    document.getElementById('date-text').innerText = ClinicalDate(sekarang, opsiTanggal);
+    document.getElementById('time-text-el').innerText = sekarang.toLocaleTimeString('id-ID') + " WIB";
 }
+function ClinicalDate(s, o) { return s.toLocaleDateString('id-ID', o); }
 
 function startTimer() {
     document.getElementById('btn-start').classList.add('hidden');
@@ -333,12 +401,22 @@ function startTimer() {
 function pauseTimer() { document.getElementById('btn-pause').classList.add('hidden'); document.getElementById('btn-start').classList.remove('hidden'); document.getElementById('btn-start').innerText = "Lanjutkan"; clearInterval(timer); }
 function stopTimer() { clearInterval(timer); alert("Sesi latihan selesai! Waktu terhitung: " + displayStopwatch.innerText); }
 
+// CONFIGURATION SORTABLEJS (Kunci Perbaikan Fitur Geser Kustom)
 Sortable.create(elList, {
-    animation: 150, ghostClass: 'bg-indigo-900',
+    animation: 150, 
+    ghostClass: 'bg-indigo-900',
+    handle: '.drag-handle-trigger', // MEMBATASI GESER HANYA SISI KIRI (Ikon Menu Garis Tiga)
+    onChoose: function() {
+        // Mencegah kartu nge-bug berubah gelap saat mulai disentuh/ditekan dalam mode terang
+        if (temaAktif === "terang") perbaruiWarnaKartuRealtime();
+    },
     onEnd: function () {
         let urutan = [];
         document.querySelectorAll('#program-list > div').forEach(el => urutan.push(el.getAttribute('data-id')));
         localStorage.setItem('gym_program_order', JSON.stringify(urutan));
+        
+        // Memaksa ulang sinkronisasi warna sesaat setelah kartu dilepas dari posisi pergeseran baru
+        if (temaAktif === "terang") perbaruiWarnaKartuRealtime();
     }
 });
 
@@ -353,7 +431,7 @@ function simpanSesiLatihan() {
     const durasi = displayStopwatch.innerText;
     const sekarang = new Date();
     const tanggalStr = sekarang.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-    const waktuStr = ClinicalTime(sekarang);
+    const waktuStr = sekarang.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':');
 
     let logsTersimpan = JSON.parse(localStorage.getItem('gym_logs')) || [];
     let adaDataDinput = false;
@@ -387,7 +465,6 @@ function simpanSesiLatihan() {
     document.getElementById('btn-pause').classList.add('hidden'); document.getElementById('btn-stop').setAttribute('disabled', true);
     alert("Data latihan berhasil disimpan!"); tampilkanRiwayat();
 }
-function ClinicalTime(s) { return s.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':'); }
 
 function tampilkanRiwayat() {
     const tbody = document.getElementById('tabel-riwayat-body'); tbody.innerHTML = "";
@@ -445,7 +522,7 @@ function imporData(input) {
 }
 
 function resetSemuaData() {
-    if (confirm("Apakah kamu yakin ingin mereset data?")) {
+    if (confirm("Apakah kamu yakin ingin mereset data? Tindakan ini akan menghapus semua riwayat latihan, nama, dan KATEGORI KUSTOM.")) {
         if (confirm("Peringatan terakhir! Semua data akan hilang permanen. Lanjutkan reset?")) {
             localStorage.clear(); alert("Semua data berhasil dibersihkan."); location.reload();
         }
